@@ -19,7 +19,11 @@
             </pattern>
         </layout>
     </appender>
-
+    <appender name="SQL_CONSOLE_LOG" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{HH:mm:ss} %boldCyan(%logger{0}) %highlight(%boldGreen(%msg%n))</pattern>
+        </encoder>
+    </appender>
     <!-- test 测试环境 输出到文件 info-->
     <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--如果只是想要 Info 级别的日志，只是过滤 info 还是会输出 Error 日志，因为 Error 的级别高，
@@ -80,13 +84,6 @@
         </encoder>
     </appender>
 
-    <!-- 测试环境+开发环境. 多个使用逗号隔开. -->
-    <springProfile name="dev">
-        <logger name="com.maxcoder.sys.controller" level="INFO" additivity="false">
-            <appender-ref ref="consoleLog"/>
-        </logger>
-    </springProfile>
-
     <!-- 生产环境. -->
     <springProfile name="test,prod">
         <logger name="com.prostate.record.controller" level="INFO" additivity="false">
@@ -94,11 +91,26 @@
             <appender-ref ref="fileErrorLog"/>
         </logger>
     </springProfile>
-
-    <root level="INFO">
+    <!-- 开发环境 -->
+    <springProfile name="dev">
+        <logger name="com.prostate.common.aspect" level="INFO" additivity="false">
+            <appender-ref ref="consoleLog"/>
+        </logger>
+        <logger name="com.prostate.cos" level="DEBUG" additivity="false">
+            <appender-ref ref="consoleLog"/>
+        </logger>
+        <logger name="com.prostate.ocr" level="DEBUG" additivity="false">
+            <appender-ref ref="consoleLog"/>
+        </logger>
+        <logger name="com.prostate.sms" level="DEBUG" additivity="false">
+            <appender-ref ref="SQL_CONSOLE_LOG"/>
+        </logger>
+        <logger name="com.prostate" level="info" additivity="false">
+            <appender-ref ref="SQL_CONSOLE_LOG"/>
+        </logger>
+    </springProfile>
+    <root level="info">
         <appender-ref ref="consoleLog"/>
-        <!--<appender-ref ref="fileInfoLog"/>-->
-        <!--<appender-ref ref="fileErrorLog"/>-->
     </root>
 
 </configuration>

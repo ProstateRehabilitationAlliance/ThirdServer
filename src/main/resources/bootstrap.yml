@@ -10,3 +10,7 @@ qcloud:
   appid: 1400091903
   secretkey: 5aec8ead3060edd9278730217587053d
   smssign: 腾讯云
+
+logging:
+  level:
+    root: warn

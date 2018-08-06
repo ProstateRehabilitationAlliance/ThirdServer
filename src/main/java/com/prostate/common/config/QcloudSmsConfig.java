@@ -1,10 +1,7 @@
 package com.prostate.common.config;
 
 
-import com.github.qcloudsms.SmsMultiSender;
-import com.github.qcloudsms.SmsSingleSender;
-import com.github.qcloudsms.SmsVoicePromptSender;
-import com.github.qcloudsms.SmsVoiceVerifyCodeSender;
+import com.github.qcloudsms.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,4 +50,21 @@ public class QcloudSmsConfig {
         return smsVoiceVerifyCodeSender;
     }
 
+    @Bean(name = "fileVoiceSender")
+    public FileVoiceSender getFileVoiceSender() {
+        FileVoiceSender fileVoiceSender = new FileVoiceSender(appid, secretkey);
+        return fileVoiceSender;
+    }
+
+    @Bean(name = "ttsVoiceSender")
+    public TtsVoiceSender getTtsVoiceSender() {
+        TtsVoiceSender ttsVoiceSender = new TtsVoiceSender(appid, secretkey);
+        return ttsVoiceSender;
+    }
+
+    @Bean(name = "voiceFileUploader")
+    public VoiceFileUploader getVoiceFileUploader() {
+        VoiceFileUploader voiceFileUploader = new VoiceFileUploader(appid, secretkey);
+        return voiceFileUploader;
+    }
 }

@@ -7,7 +7,9 @@ import com.prostate.ocr.util.OcrUtils;
 import com.prostate.ocr.util.SignUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
@@ -19,12 +21,19 @@ public class OcrController extends BaseController {
     private HttpAPIService httpAPIService;
 
 
+    /**
+     * 腾讯省份证识别
+     *
+     * @param url
+     * @return
+     * @throws Exception
+     */
     @GetMapping(value = "idCard")
-    public Map<String,Object> idCard(String url) throws Exception {
+    public Map<String, Object> idCard(String url) throws Exception {
 
         String authorization = SignUtils.appSign(OcrConstants.APP_ID, OcrConstants.SECRET_ID, OcrConstants.SECRET_KEY, 18000);
 
-        String idCardResult = httpAPIService.doPost(OcrConstants.ID_CARD_HTTP_URL, url,authorization,"application/json","recognition.image.myqcloud.com");
+        String idCardResult = httpAPIService.doPost(OcrConstants.ID_CARD_HTTP_URL, url, authorization, "application/json", "recognition.image.myqcloud.com");
         if (idCardResult == null) {
             return insertFailedResponse();
         }
