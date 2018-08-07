@@ -102,12 +102,23 @@ public class SmsController extends BaseController {
     @PostMapping(value = "sendLoginCode")
     public Map<String, Object> sendLoginCode(@Validated({PhoneNumberView.class}) SmsParams smsParams) throws HTTPException, IOException {
 
+        //生成6位数字验证码
+        String numberCode = RandomStringUtils.randomNumeric(6);
+
+        //添加模版参数
         ArrayList<String> params = new ArrayList<>();
-        params.add(RandomStringUtils.randomNumeric(6));
+        params.add(numberCode);
         params.add("5");
 
+
+
+        //调用短信模版单发服务发送短信
         boolean b = smsService.singleSendByTemplate("86", smsParams.getPhoneNumber(), 162055, params);
+
+        //发送结果判断
         if (b) {
+            //验证信息添加到redis缓存中
+            redisSerive.insert(numberCode, smsParams.getPhoneNumber(), 305);
             return smsSendSuccess("发送成功");
         }
         return smsSendFailed("发送失败");
@@ -126,12 +137,24 @@ public class SmsController extends BaseController {
      */
     @PostMapping(value = "sendPasswordReplaceCode")
     public Map<String, Object> sendPasswordReplaceCode(@Validated({PhoneNumberView.class}) SmsParams smsParams) throws HTTPException, IOException {
+
+        //生成6位数字验证码
+        String numberCode = RandomStringUtils.randomNumeric(6);
+
+        //添加模版参数
         ArrayList<String> params = new ArrayList<>();
-        params.add(RandomStringUtils.randomNumeric(6));
+        params.add(numberCode);
         params.add("5");
 
+
+
         boolean b = smsService.singleSendByTemplate("86", smsParams.getPhoneNumber(), 162056, params);
+
+        //发送结果判断
         if (b) {
+            //验证信息添加到redis缓存中
+            redisSerive.insert(numberCode, smsParams.getPhoneNumber(), 305);
+
             return smsSendSuccess("发送成功");
         }
         return smsSendFailed("发送失败");
@@ -149,12 +172,23 @@ public class SmsController extends BaseController {
      */
     @PostMapping(value = "sendRegisterCode")
     public Map<String, Object> sendRegisterCode(@Validated({PhoneNumberView.class}) SmsParams smsParams) throws HTTPException, IOException {
+        //生成6位数字验证码
+        String numberCode = RandomStringUtils.randomNumeric(6);
+
+        //添加模版参数
         ArrayList<String> params = new ArrayList<>();
-        params.add(RandomStringUtils.randomNumeric(6));
+        params.add(numberCode);
         params.add("5");
 
+
+
         boolean b = smsService.singleSendByTemplate("86", smsParams.getPhoneNumber(), 162057, params);
+
+
         if (b) {
+            //验证信息添加到redis缓存中
+            redisSerive.insert(numberCode, smsParams.getPhoneNumber(), 305);
+
             return smsSendSuccess("发送成功");
         }
         return smsSendFailed("发送失败");
