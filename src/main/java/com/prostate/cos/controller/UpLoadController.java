@@ -33,6 +33,7 @@ public class UpLoadController extends BaseController {
         bucketMap.put("disease-records", "disease-records-1256660245");
         bucketMap.put("hospital-records", "hospital-records-1256660245");
         bucketMap.put("inspection-records", "inspection-records-1256660245");
+        bucketMap.put("doctor-sign", "doctor-sign-1256660245");
     }
 
     @PostMapping(value = "upload")
