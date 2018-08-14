@@ -12,9 +12,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableEurekaServer
 @SpringBootApplication
 @EnableCaching
-public class ThirdPartyApplication {
+public class ThirdApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ThirdPartyApplication.class, args);
+		SpringApplication.run(ThirdApplication.class, args);
 	}
 }
